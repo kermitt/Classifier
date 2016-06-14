@@ -1,23 +1,26 @@
 package kmeans;
-import java.util.*;
+
 public class ReduxPoint {
-	// Does not matter if DEFAULT_SIZE is too big, but 
-	// it can't be too small	
-	// I set it here to '3' to 'x' 'y' and 'z' but 
-	// the value might as well be 2000
-	public int DEFAULT_SIZE = 3; 
-	public List < Double > vec = new ArrayList<>(); 
-	public ReduxPoint(double[] points) {
-		for ( int i = 0; i < points.length; i++) {
-			vec.add(points[i]);
+	public double[] vector;
+	
+	public Integer closest = -1;
+	public Integer nextClosest = -1;
+	public double closestDistance = Double.MAX_VALUE;
+	public ReduxPoint(double[] vector) {
+		this.vector = vector;
+	}
+	public void maybeReassign(double distance, Integer attractorId ){
+		if ( distance < closestDistance ) {
+			closestDistance = distance;
+			closest = attractorId;
 		}
 	}
-	public ReduxPoint() {
-
-		for ( int i = 0; i < DEFAULT_SIZE; i++) {
-			vec.add(0.0);
+	public String describe() {
+		String out  = closest + ":\t"; 
+		for ( int i = 0; i < vector.length; i++ ) { 
+			out += vector[i] + "|";
 		}
-
-		
+		out += " :: " + closestDistance;
+		return out;
 	}
 }

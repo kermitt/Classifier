@@ -1,39 +1,81 @@
 package kmeans;
 
+import java.util.HashMap;
+
 import common.Caller;
 
 public class Test_Redux {
+	private ReduxShiftMeans rsm;
+	private void setup() { 
+		int shape = 3; // number of dimensions in the observers and the attractors
+		int maxDepth = 10; // max number of recurses
+		rsm = new ReduxShiftMeans( shape, maxDepth ); 
+	}
+	
 	public static void main(String... strings) {
 		Test_Redux tr = new Test_Redux();
-		tr.recurse();
-		tr.getNumberOfK();
+		tr.setup();
+		tr.addPoints_step1();
+		tr.createAttractors_step2();
+		//	tr.overRide_createAttractors_step2();
+		tr.recurse_prep_step3();
+		tr.showFinalState();
 	}
-	public void getNumberOfK() { 
-		// getNumberOfK() is, pretty much, (int)Math.log(x) * 2 ) 
-		boolean isOk = true;
-		int[] observationsCount = new int[] { 2,20,200,2000,20000,200000 };
-		ReduxShiftMeans rsm = new ReduxShiftMeans();
-		int[] expected = new int[] {2,5,10,15,19,24};
-		for ( int i = 0; i < observationsCount.length; i++ ) { 
-			int k = rsm.getNumberOfK( observationsCount[i]); 
-			if ( k != expected[i]) {
-				isOk = false;
-			}
+	public void showFinalState() {
+		
+		rsm.describe(1000);
+	}
+	public void recurse_prep_step3() { 
+		rsm.recurse_prep_step3();
+		boolean isOk = rsm.lastEpoch >= rsm.maxRecurseDepth;
+		Caller.log( isOk );
+	}
+	public void overRide_createAttractors_step2() {
+		rsm.attractors = new HashMap<>();
+		rsm.attractors.put(0, new ReduxAttractor(0,new double[]{1,1,1}));
+		rsm.attractors.put(1, new ReduxAttractor(1,new double[]{.9,.9,.9}));
+		rsm.attractors.put(2, new ReduxAttractor(2,new double[]{.0,.0,.0}));
+		
+	}
+	public void createAttractors_step2() { 
+		rsm.createAttractors_step2();
+		for ( Integer key : rsm.attractors.keySet()) {
+			ReduxAttractor a = rsm.attractors.get(key);
+			//Caller.log( a.describe());
 		}
-		Caller.log( isOk ); 
+		boolean isOk = rsm.attractors.size() > 0;
+		int shape = rsm.observations.get(0).vector.length;
+		isOk &= rsm.attractors.get(0).vector.length == shape;
+		Caller.log( isOk );
 	}
 
-	public void recurse() {
-		// hard to UnitTest recursive stuff :'(
-		boolean isOk = false;
-		try {
-			ReduxShiftMeans rsm = new ReduxShiftMeans();
-			rsm.doRecursiveCalc(10);
-			isOk = true;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		Caller.log(isOk);
+	public void addPoints_step1() {
 
+		double[][] raw = new double[][] {
+			{1,1,1},
+			{.9,0.0,0.2},
+			{-.9,-0.0,-0.2},
+			{-1,-1,-1},
+			{-1,1,1},
+			{1,-1,1},
+			{1,1,-1},
+			{1,-1,-1},
+			{-1,-1,1},
+			{1,-1,-1},
+			
+		};
+		for ( int i = 0; i < raw.length; i++ ) { 
+			rsm.addPoints_step1(raw[i]);
+		}
+		
+		for ( Integer key : rsm.observations.keySet()) {
+			ReduxPoint o = rsm.observations.get(key);
+			//Caller.log( o.describe());
+		}
+		
+		boolean isOk = rsm.observations.size() == raw.length;
+		isOk &= rsm.observations.get(0).vector.length == raw[0].length;
+		
+		Caller.log( isOk );
 	}
 }
