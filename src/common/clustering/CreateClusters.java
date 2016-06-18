@@ -4,6 +4,9 @@ import common.Caller;
 import common.Library;
 import common.PSVReader;
 import common.Seen;
+import kmeans.ReduxPoint;
+import kmeans.ReduxShiftMeans;
+import kmeans.Redux_ExampleUsage;
 
 import java.util.*;
 
@@ -14,6 +17,12 @@ public class CreateClusters extends PSVReader {
 	private double leastX, leastY, leastZ;
 
 	public void setup() {
+		
+		int shape = 3; // number of dimensions in the observers and the attractors
+		int maxDepth = 10; // max number of recurses
+		kShiftMeans = new ReduxShiftMeans( shape, maxDepth ); 
+
+		
 		X = Library.getRiv(Library.most_drug_label_name.split(Library.PIPE)[2]);
 		Y = Library.getRiv(Library.most_drug_group_description.split(Library.PIPE)[2]);
 		Z = Library.getRiv(Library.most_gender_code.split(Library.PIPE)[2]);
@@ -40,7 +49,7 @@ public class CreateClusters extends PSVReader {
 		// "1070035|true|1.0,1.0,-1.0,1.0,1.0,1.0,1.0,-1.0,1.0,1.0,1.0,1.0,1.0,1.0,-1.0,1.0,-1.0,1.0,1.0,1.0,-1.0,1.0,-1.0,1.0,-1.0,-1.0,1.0,-1.0,-1.0,1.0,1.0,-1.0,1.0,1.0,-1.0,-1.0,-1.0,1.0,1.0,1.0,1.0,1.0,-1.0,-1.0,1.0,-1.0,-1.0,1.0,-1.0,1.0";
 
 	}
-
+	public ReduxShiftMeans kShiftMeans;
 	public static void main(String... strings) {
 
 		long t1 = System.currentTimeMillis();
@@ -51,12 +60,17 @@ public class CreateClusters extends PSVReader {
 
 		pc.read_psv(3000000, fullpath);
 		long t2 = System.currentTimeMillis();
-		pc.display();
 		
+
+		pc.kShiftMeans.createAttractors_step2();
+		pc.kShiftMeans.recurse_prep_step3();
+		pc.kShiftMeans.describe(0);
+		
+		
+		pc.display();
 		
 		Caller.context_note("The end in " + (t2 - t1) + " milsec ");
 	}
-
 
 	public void display() {
 		for (String when : time_chunks.keySet()) {
@@ -67,9 +81,24 @@ public class CreateClusters extends PSVReader {
 		Caller.log("leastX : " + leastX + " Y: " + leastY + " Z: " + leastZ);
 
 	}
-
+/*
+	public void bigTest() { 
+		
+		for ( int i = 0; i < 2000; i++ ) {
+			double[] ary = new double[shape];
+			ary[0] = Math.random() * 2 - 1;
+			ary[1] = Math.random() * 2 - 1;
+			ary[2] = Math.random() * 2 - 1;
+			
+			kShiftMeans.addPoints_step1(ary);
+		}
+		kShiftMeans.createAttractors_step2();
+		kShiftMeans.recurse_prep_step3();
+	//	rsm.describe();
+	}
+*/
+	
 	int depth = 0;
-
 	@Override
 	public void populate(String entry) {
 		String headers = "person_id|when|velocity|days_supply_count|patient_paid_amount|ingredient_cost_paid_amount|riv";
@@ -92,8 +121,11 @@ public class CreateClusters extends PSVReader {
 				double XX = Library.vectorCosineSimilarity(X, riv);
 				double YY = Library.vectorCosineSimilarity(Y, riv);
 				double ZZ = Library.vectorCosineSimilarity(Z, riv);
-				if (depth < 100) {
-					Caller.log(person_id + "  X: " + XX + "   Y: " + YY + "    Z: " + ZZ);
+				
+	//			ReduxPoint rp = new ReduxPoint( new double[] { XX,YY,ZZ });
+				kShiftMeans.addPoints_step1(new double[]{XX,YY,ZZ});
+				if (depth < 20) {
+					Caller.log(depth + " when: " + when + "   " + person_id + "  X: " + XX + "   Y: " + YY + "    Z: " + ZZ);
 				}
 				depth++;
 
@@ -105,5 +137,4 @@ public class CreateClusters extends PSVReader {
 			System.exit(0);
 		}
 	}
-
 }

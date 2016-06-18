@@ -30,19 +30,21 @@ public class ReduxShiftMeans {
 	// 1st time populate the attractors
 	public void createAttractors_step2() {
 		double count = Math.log(observations.size());
-		count *= 2;
+		count *= 3;
 		int result = (int) count;
 		if (result < 2) {
 			result = 2;
 		}
-
+		Caller.log("COUNT: " + count );
 		for (int i = 0; i < result; i++) {
 			double[] d = new double[shape];
 			for (int j = 0; j < shape; j++) {
-				d[j] = Math.random() * 2 - 1;
+				d[j] = Math.random() * 4 - 2;
 			}
 			attractors.put(i, new ReduxAttractor(i, d));
 		}
+		
+	
 	}
 
 
