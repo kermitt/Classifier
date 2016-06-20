@@ -1,6 +1,10 @@
 package common;
 
+import java.text.DecimalFormat;
+
 public class Library {
+//	public static String DATA_FOR_REAL = "female.csv"; // breast, melonoma,
+
 	public static String DATA_FOR_REAL = "22_24_29.csv"; // breast, melonoma,
 															// prostate
 	public static String DATA_FOR_TEST = "head.csv"; // test data local
@@ -8,6 +12,7 @@ public class Library {
 	public static String DATA_PATH = "C://sites//healthpath//data//";
 	public static String RIV_STORE = "22_24_29_RIV_STORE.psv";
 	public static String ROLLUP_FILE = "22_24_29_rollup.psv";
+	public static String CLUSTER_FILE = "22_24_29_clusters.psv";
 
 	public static double vectorCosineSimilarity(double[] a, double[] b) {
 		double dotProduct = 0.0;
@@ -50,18 +55,32 @@ public class Library {
 		}
 		return out;
 	}
-	
-	public static double[] getRiv(String riv_as_string ) {
+	public static double[] getBlankRiv() {
+		double[] riv = new double[50];
+		for (int i = 0; i < 50; i++) {
+			riv[i] = 0;//Double.parseDouble(ary[i]);
+		}
+		riv[0] = 1;
+		return riv;
+	}
+	public static double[] getRiv(String riv_as_string) {
 		String[] ary = riv_as_string.split(",");
 		double[] riv = new double[ary.length];
-		for ( int i = 0; i < ary.length; i++) {
+		for (int i = 0; i < ary.length; i++) {
 			riv[i] = Double.parseDouble(ary[i]);
 		}
 		return riv;
 	}
 
+	public static double roundTwoDecimals(double d) {
+		DecimalFormat twoDForm = new DecimalFormat("#.##");
+		return Double.valueOf(twoDForm.format(d));
+	}
 
-	/* Use common.DescribeData.java to generate more of this sort of thing - This is here just as a temp helper during dev*/
+	/*
+	 * Use common.DescribeData.java to generate more of this sort of thing -
+	 * This is here just as a temp helper during dev
+	 */
 	public static String most_before_diagnosis = "1304575|false|1.0,1.0,1.0,1.0,1.0,1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,1.0,-1.0,-1.0,1.0,-1.0,-1.0,1.0,1.0,1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,1.0,1.0,1.0,1.0,1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,1.0,-1.0,-1.0,1.0,-1.0,-1.0";
 	public static String most_gender_code = "1007935|m|1.0,-1.0,1.0,-1.0,-1.0,1.0,-1.0,-1.0,-1.0,1.0,-1.0,-1.0,1.0,-1.0,-1.0,-1.0,-1.0,1.0,-1.0,1.0,-1.0,-1.0,-1.0,1.0,1.0,1.0,1.0,-1.0,1.0,-1.0,1.0,-1.0,1.0,-1.0,1.0,-1.0,-1.0,1.0,1.0,1.0,1.0,1.0,-1.0,-1.0,-1.0,1.0,1.0,1.0,-1.0,1.0";
 	public static String most_drug_label_name = "28950|hydrocodone/acetaminophen tablet|1.0,-1.0,1.0,-1.0,-1.0,1.0,-1.0,1.0,-1.0,1.0,-1.0,1.0,-1.0,-1.0,1.0,-1.0,1.0,-1.0,1.0,1.0,-1.0,1.0,1.0,1.0,-1.0,1.0,1.0,-1.0,1.0,-1.0,1.0,1.0,-1.0,-1.0,1.0,1.0,1.0,-1.0,-1.0,1.0,1.0,-1.0,1.0,-1.0,1.0,1.0,1.0,-1.0,-1.0,1.0";

@@ -9,7 +9,7 @@ import common.Caller;
 public class GeneralWriter {
 	private String targetPSV = null;
 
-	public GeneralWriter(String targetPSV) {
+	public GeneralWriter(String targetPSV ) {
 		this.targetPSV = targetPSV;
 	}
 
@@ -32,7 +32,7 @@ public class GeneralWriter {
 				BufferedWriter bw = new BufferedWriter(fw);
 				PrintWriter out = new PrintWriter(bw)) {
 			out.println(row);
-			if (depth % 100000 == 0 && depth > 0) {
+			if (depth % 10000 == 0 && depth > 0) {
 				Caller.note("Write is passing " + depth);
 			}
 			depth++;

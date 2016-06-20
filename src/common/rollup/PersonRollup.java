@@ -15,7 +15,9 @@ public class PersonRollup extends PSVReader {
 
 	// untested
 	private void marshal() {
-		String header = "person_id|when|velocity|days_supply_count|patient_paid_amount|ingredient_cost_paid_amount|riv";
+//		String header = "person_id|when|velocity|days_supply_count|patient_paid_amount|ingredient_cost_paid_amount|riv";
+		String header = "person_id|when|velocity|days_supply_count|patient_paid_amount|ingredient_cost_paid_amount|riv|male|female|sex_other|ccs_category_id_22|ccs_category_id_24|ccs_category_id_29|ccs_cat_other";
+		
 		String filepath = Library.DATA_PATH + Library.ROLLUP_FILE;
 		GeneralWriter gw = new GeneralWriter(filepath);
 		gw.step1_of_2(header);
@@ -34,6 +36,7 @@ public class PersonRollup extends PSVReader {
 	public void merge() {
 		for (String person_id : people.keySet()) {
 			_Person person = people.get(person_id);
+
 			for (String when : person.series.keySet()) {
 				_TimeChunk tc = person.series.get(when);
 				for (String feature : tc.router.keySet()) {
@@ -45,7 +48,7 @@ public class PersonRollup extends PSVReader {
 								double[] riv = Library.getRiv(concept.riv);
 								tc.addRIV(riv);
 							} catch (java.lang.NullPointerException npe) {
-								Caller.note(feature + "|" + payload + "|" + npe.getMessage());
+								Caller.log(npe.getMessage() + "   " + feature + "|" + payload + "|" + npe.getMessage());
 							}
 						}
 					}

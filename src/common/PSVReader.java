@@ -8,11 +8,27 @@ import java.util.Date;
 import java.util.Scanner;
 
 import common.Caller;
+import common.rollup._Person;
 
 public class PSVReader extends CommonPSVFormat {
 	public void populate(String x) {
 	} // this exists to be overridden
-
+/*
+	public boolean preventOneOffs(_Person person) {
+		boolean not_a_one_off = false;
+		if (person.series.size() > 6) {
+			not_a_one_off = true;
+		} else {
+			for (String key : person.series.keySet()) {
+				if (person.series.get(key).velocity > 6) {
+					not_a_one_off = true;
+				}
+			}
+		}
+		return not_a_one_off;
+	}
+*/
+	
 	public void read_psv(Integer limit, String file) {
 		if (limit == null) {
 			limit = 2000000;

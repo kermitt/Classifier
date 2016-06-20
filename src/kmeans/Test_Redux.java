@@ -20,6 +20,9 @@ public class Test_Redux {
 		//	tr.overRide_createAttractors_step2();
 		tr.recurse_prep_step3();
 		tr.showFinalState();
+		Caller.log("Test end");
+		
+		
 	}
 	public void showFinalState() {
 		
@@ -32,15 +35,15 @@ public class Test_Redux {
 	}
 	public void overRide_createAttractors_step2() {
 		rsm.attractors = new HashMap<>();
-		rsm.attractors.put(0, new ReduxAttractor(0,new double[]{1,1,1}));
-		rsm.attractors.put(1, new ReduxAttractor(1,new double[]{.9,.9,.9}));
-		rsm.attractors.put(2, new ReduxAttractor(2,new double[]{.0,.0,.0}));
+		rsm.attractors.put(0, new _ReduxAttractor(0,new double[]{1,1,1}));
+		rsm.attractors.put(1, new _ReduxAttractor(1,new double[]{.9,.9,.9}));
+		rsm.attractors.put(2, new _ReduxAttractor(2,new double[]{.0,.0,.0}));
 		
 	}
 	public void createAttractors_step2() { 
 		rsm.createAttractors_step2();
 		for ( Integer key : rsm.attractors.keySet()) {
-			ReduxAttractor a = rsm.attractors.get(key);
+			_ReduxAttractor a = rsm.attractors.get(key);
 			//Caller.log( a.describe());
 		}
 		boolean isOk = rsm.attractors.size() > 0;
@@ -65,11 +68,13 @@ public class Test_Redux {
 			
 		};
 		for ( int i = 0; i < raw.length; i++ ) { 
-			rsm.addPoints_step1(raw[i]);
+			// the 0,0,0,0 are for velocity and costs ect...  not interested 
+			// in that aspect in this test so I just set them all to 0
+			rsm.addPoints_step1(raw[i], 0,0,0,0,0,0,0,0,0,0,0);
 		}
 		
 		for ( Integer key : rsm.observations.keySet()) {
-			ReduxPoint o = rsm.observations.get(key);
+			_ReduxPoint o = rsm.observations.get(key);
 			//Caller.log( o.describe());
 		}
 		
