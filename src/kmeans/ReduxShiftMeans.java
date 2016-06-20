@@ -38,6 +38,7 @@ public class ReduxShiftMeans {
 	public void createAttractors_step2() {
 		// double count = Math.log(observations.size());
 		double count = Math.sqrt(observations.size());
+		count *= 2; 
 		int result = (int) count;
 		if (result < 2) {
 			result = 2;

@@ -105,7 +105,7 @@ public class TimeSeriesClustering extends PSVReader {
 			}
 		}
 	}
-
+	
 	int shape = 3; // number of dimensions in the observers and the attractors
 	int maxDepth = 10; // max number of recurses
 

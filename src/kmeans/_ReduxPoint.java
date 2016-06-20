@@ -1,7 +1,5 @@
 package kmeans;
 
-import common.Caller;
-
 public class _ReduxPoint extends _ReduxHyperspace {
 	public double[] vector;
 	
