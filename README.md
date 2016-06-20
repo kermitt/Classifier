@@ -13,6 +13,10 @@ Order of operation:
 
 4. TODO: Have the KShiftMeans clusterer mashal data 
 
+NOTE: To check the internal validity of of this TimeSeries cluster, open up stats.DescribeData.java to run an ANOVA to check the  NullHypothesis to get an idea if the clustered groupings are valid or not. 
+
+
+
 In more detail: 
 
 1.  The begining data are a million .csv rows like this: 
