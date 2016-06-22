@@ -45,8 +45,15 @@ public class _TimeChunk extends PSVReader {
 			// THIS MIGHT BE A GOOD IDEA. MAYBE.
 			// The more 'deep' into 'when' then the more this
 			// timechunk's RIV will be skewed. 
-			for ( int i = 0; i < when; i++ ) {
-				riv[i] += 1;
+//			for ( int i = 0; i < when; i++ ) {
+//				riv[i] += 1;
+//			}
+			int limit = 50;
+			if ( velocity < limit ) {
+				limit = velocity;
+			}
+			for ( int i = 0 ; i < limit; i++ ) {
+				riv[i] += 1;				
 			}
 		}
 		

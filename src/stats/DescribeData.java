@@ -83,7 +83,7 @@ public class DescribeData extends PSVReader {
 		String male = "";
 		String female = "";
 		//for ( int i = 0; i < males.size(); i++ ) { 
-		for ( int i = 2; i < 20; i++ ) { 
+		for ( int i = 0; i < 2; i++ ) { 
 			male += males.get(i) + ",";
 			female += females.get(i) + ",";
 		}
@@ -111,7 +111,7 @@ public class DescribeData extends PSVReader {
 				males.add(m);
 				females.add(f);
 				times.add(when);
-				
+				// wilcoxon
 				Caller.log("when " + when +  " m " + m +  " f " + f + " |" + entry);
 			} else {
 				Caller.note(pieces.length + " [DescribeData] Skipping " + entry);

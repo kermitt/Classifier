@@ -7,10 +7,10 @@ import common.Library;
 import common.Seen;
 
 public class Test_PersonRollup {
-	PersonRollup rollup;
+	PersonRollup_Step3 rollup;
 
 	public void setup() {
-		rollup = new PersonRollup();
+		rollup = new PersonRollup_Step3();
 		// read the RIV concept space
 		rollup.readConceptSpace();
 		// read the Rx records

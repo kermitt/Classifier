@@ -8,7 +8,7 @@ import common.Seen;
 import java.util.*;
 
 public class Test_Clustering {
-	private TimeSeriesClustering tsc = new TimeSeriesClustering();
+	private TimeSeriesClustering_Step3 tsc = new TimeSeriesClustering_Step3();
 	private void setup() { 
 		tsc.setup();
 		String fullpath = Library.DATA_PATH + Library.ROLLUP_FILE;

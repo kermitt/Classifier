@@ -11,7 +11,6 @@ public class ReduxShiftMeans {
 	public Map<Integer, _ReduxAttractor> attractors = new HashMap<>();
 	public int maxRecurseDepth;
 	public int nextKey = 0;
-	// public int recursedDepthbser; // just for TDD record keeping
 	public int shape; // how many dimensions the Observations and attractors get
 	public int lastEpoch = 0;
 
@@ -25,9 +24,6 @@ public class ReduxShiftMeans {
 	public void addPoints_step1(double[] ary, int velocity, int days_supply_count, int patient_paid_amount,
 			int ingredient_cost_paid_amount, int male, int female, int sex_other, int ccs_22, int ccs_24, int ccs_29,
 			int ccs_other) {
-
-		
-//		Caller.log("icost " + ingredient_cost_paid_amount + " male? " + male );
 		
 		observations.put(nextKey,
 				new _ReduxPoint(ary, velocity, days_supply_count, patient_paid_amount, ingredient_cost_paid_amount,male,female,sex_other,ccs_22, ccs_24,ccs_29, ccs_other));
@@ -36,7 +32,7 @@ public class ReduxShiftMeans {
 
 	// 1st time populate the attractors
 	public void createAttractors_step2() {
-		// double count = Math.log(observations.size());
+		// make a bunch of Attractors and sprinkle them around in the hypercube
 		double count = Math.sqrt(observations.size());
 		count *= 2; 
 		int result = (int) count;
@@ -70,6 +66,7 @@ public class ReduxShiftMeans {
 		}
 	}
 
+	// Not 'in use' per se, but this is nice for TDD purposes
 	public void showBeforeAfterLocation() {
 		for (Integer key : afterLoc.keySet()) {
 			double[] ary = afterLoc.get(key);
@@ -130,7 +127,7 @@ public class ReduxShiftMeans {
 
 	public void describe(int epoch) {
 
-		boolean show = false;
+		boolean show = true;
 
 		if (show) {
 			Caller.log(" ......................... ");

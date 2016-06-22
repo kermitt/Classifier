@@ -31,7 +31,7 @@ public class Test_Conceptspace {
 	private static void createRIV() {
 		boolean show = false;
 		boolean isOk = false;
-		PopulateConcepts pc = new PopulateConcepts();
+		PopulateConcepts_Step1 pc = new PopulateConcepts_Step1();
 
 		String riv1 = pc.createRIV();
 		String riv2 = pc.createRIV();
@@ -48,7 +48,7 @@ public class Test_Conceptspace {
 	private static void getDaysSinceEpoch() {
 		boolean show = false;
 		boolean isOk = false;
-		PopulateConcepts pc = new PopulateConcepts();
+		PopulateConcepts_Step1 pc = new PopulateConcepts_Step1();
 		String when = "06/03/2016";
 		int days = pc.getDaysSinceEpoch(when);
 		if (show)
@@ -63,7 +63,7 @@ public class Test_Conceptspace {
 		try {
 			String[] ary = { "1", "4", "5", "6", "8", "9", "10", "11", "14", "15", "16", "19", "21" };
 			int[] expected = { 0, 0, 10, 10, 10, 10, 10, 10, 10, 20, 20, 20, 20 };
-			PopulateConcepts pc = new PopulateConcepts();
+			PopulateConcepts_Step1 pc = new PopulateConcepts_Step1();
 			for (int i = 0; i < ary.length; i++) {
 				String s = ary[i];
 				int result;
@@ -87,7 +87,7 @@ public class Test_Conceptspace {
 		// has the HoH... This method will test that that HoH
 		// is properly populated
 		// by PopulateConcepts.java
-		PopulateConcepts pc = new PopulateConcepts();
+		PopulateConcepts_Step1 pc = new PopulateConcepts_Step1();
 		pc.read_psv(100, Library.DATA_PATH + Library.DATA_FOR_TEST);
 		for (String key : pc.router.keySet()) {
 			if (show)

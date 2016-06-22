@@ -3,7 +3,7 @@ package common;
 import java.text.DecimalFormat;
 
 public class Library {
-//	public static String DATA_FOR_REAL = "female.csv"; // breast, melonoma,
+	//public static String DATA_FOR_REAL = "female.csv"; // breast, melonoma,
 
 	public static String DATA_FOR_REAL = "22_24_29.csv"; // breast, melonoma,
 															// prostate
@@ -13,7 +13,7 @@ public class Library {
 	public static String RIV_STORE = "22_24_29_RIV_STORE.psv";
 	public static String ROLLUP_FILE = "22_24_29_rollup.psv";
 	public static String CLUSTER_FILE = "22_24_29_clusters.psv";
-
+	public static int TIME_PERIOD = 90;//3000; // NORMALLY this 90
 	public static double vectorCosineSimilarity(double[] a, double[] b) {
 		double dotProduct = 0.0;
 		double magnitude1 = 0.0;
@@ -63,6 +63,19 @@ public class Library {
 		riv[0] = 1;
 		return riv;
 	}
+	public static double[] getRandomRiv() {
+		double[] riv = new double[50];
+		for (int i = 0; i < 50; i++) {
+			if ( Math.random() > 0.5) {
+				riv[i] = -1;
+			} else {
+				riv[i] = 1;
+			}
+		}
+		riv[0] = 1;
+		return riv;
+	}
+
 	public static double[] getRiv(String riv_as_string) {
 		String[] ary = riv_as_string.split(",");
 		double[] riv = new double[ary.length];

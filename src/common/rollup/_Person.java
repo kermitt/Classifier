@@ -4,7 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class _Person {
-	public boolean SKEW_RIV_BASED_ON_TIME = true; // Maybe this is a good idea
+	public boolean SKEW_RIV_BASED_ON_TIME = false; // Maybe this is a good idea
+	public boolean SKEW_RIV_BASED_VELOCITY = false; // Maybe this is a good idea
 	
 	public Map < String, _TimeChunk> series = new HashMap <>(); 
  	public int earliest_day = Integer.MAX_VALUE;
@@ -18,6 +19,9 @@ public class _Person {
 		if ( ! series.containsKey(when)) {		
 			series.put(when, new _TimeChunk(period, SKEW_RIV_BASED_ON_TIME));
 		}
+		
+		
+		
 		series.get(when).addEntry(when,entry);
 	}
 }
